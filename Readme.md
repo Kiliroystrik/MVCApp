@@ -141,10 +141,24 @@ php -S localhost:8000
 http://localhost:8000
 ```
 
-## Structure du projet ##
-- `src/`: Dossier contenant les `modèles`, les `vues`, les `contrôleurs` et la configuration de la base de données, `data`.
-- `vendor/`: Dossier généré par `Composer` contenant les dépendances du projet.
-- `index.php`: Fichier point d'entrée de l'application.
+## Structure du projet
+
+Ce projet est organisé en plusieurs dossiers et fichiers principaux pour faciliter le développement et la maintenance. Voici une description détaillée de chaque composant :
+
+- **`src/`** : Ce dossier est le cœur de l'application. Il contient tous les éléments spécifiques au développement de votre application MVC, organisés en sous-dossiers :
+  - **`model/`** : Contient les classes modèles qui gèrent la logique métier et les interactions avec la base de données. Les modèles sont responsables de récupérer, de manipuler et de stocker les données.
+  - **`view/`** : Contient les fichiers qui génèrent l'output utilisateur (frontend). Ces fichiers sont principalement composés de HTML avec des insertions de PHP pour rendre les données dynamiques provenant des modèles.
+  - **`controller/`** : Contient les classes contrôleurs qui reçoivent les entrées de l'utilisateur, font le traitement nécessaire en faisant appel aux modèles, et sélectionnent la vue appropriée à afficher.
+  - **`data/`** : Un sous-dossier spécialisé pour gérer la configuration et les interactions avec la base de données, comme la classe `Database` utilisant le Singleton Pattern pour la connexion à la base de données.
+
+- **`vendor/`** : Dossier généré automatiquement par Composer. Il contient toutes les bibliothèques et dépendances tierces que votre projet utilise. Ce dossier ne devrait pas être modifié manuellement, car Composer le gère à travers les fichiers `composer.json` et `composer.lock`.
+
+- **`index.php`** : Fichier point d'entrée de l'application. Ce fichier initialise l'application, configure les dépendances et routage, et démarre le processus de traitement des requêtes utilisateur. Il charge l'autoloader de Composer, instancie le contrôleur principal, et délègue le contrôle à celui-ci pour la gestion des actions requises.
+
+### Note sur la structure:
+
+- Chaque composant et dossier est conçu pour séparer clairement les responsabilités au sein de l'application, suivant les principes du modèle MVC. Cette séparation aide à maintenir le code organisé, facile à tester, et simplifie la modification ou l'extension des fonctionnalités à l'avenir.
+
 
 ## Exercice - Pas à pas ##
 - ### 1. Créer le fichier `Database.php` pour la connexion à la base de données
