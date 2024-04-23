@@ -208,12 +208,12 @@ S'assurer que chaque méthode gère proprement les données et les exceptions.
 - ### 3. Continuation du développement MVC
 > Après avoir configuré la base de données et le `modèle`, les prochaines étapes incluront la création des `contrôleurs` et des `vues` pour interagir avec ces modèles.
 
-- ### 4. Créer le contrôleur BooksController.php
+- ### 4. Créer le contrôleur BookController.php
 
 **Objectif : Orchestrer la communication entre les vues et le modèle Book.**
 
 > **Instructions :**
-Créer une classe `BooksController` qui initialisera le modèle `Book`.
+Créer une classe `BookController` qui initialisera le modèle `Book`.
 Ajouter des méthodes pour chaque action utilisateur possible (affichage, ajout, modification, suppression de livres).
 S'assurer que le `contrôleur` passe les données appropriées à la vue.
 
