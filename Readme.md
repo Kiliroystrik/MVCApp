@@ -48,7 +48,7 @@ class Car extends Vehicle {
 $myCar = new Car();
 $myCar->setSpeed(100);
 echo $myCar->makeSound();  // Affiche 'Vroom'
-`` 
+```
 
 ## Prérequis
 - PHP 7.4 ou supérieur
