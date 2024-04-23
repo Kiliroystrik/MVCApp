@@ -144,6 +144,7 @@ http://localhost:8000
 ## Structure du projet ##
 - `src/`: Dossier contenant les `modèles`, les `vues`, les `contrôleurs` et la configuration de la base de données, `data`.
 - `vendor/`: Dossier généré par `Composer` contenant les dépendances du projet.
+- `index.php`: Fichier point d'entrée de l'application.
 
 ## Exercice - Pas à pas ##
 - ### 1. Créer le fichier `Database.php` pour la connexion à la base de données
