@@ -1,6 +1,6 @@
 # Projet Bibliothèque PHP MVC
 
-Ce projet est une application simple de gestion de bibliothèque en PHP utilisant le modèle MVC. Il implémente les principes de la programmation orientée objet et utilise Composer pour l'autoloading. 
+Ce projet est une application simple de gestion de bibliothèque en PHP utilisant le modèle MVC. Il implémente les principes de la programmation orientée objet et utilise Composer pour l'autoloading. Et en respectant la POO.
 
 ## Objectif ##
 Fournir une application fonctionnelle permettant de gérer un CRUD des entrées de livres (ajout, modification, suppression et affichage).
@@ -9,6 +9,46 @@ Fournir une application fonctionnelle permettant de gérer un CRUD des entrées 
 - `Modèle` : Gère la logique des données et les interactions avec la base de données (par exemple, des requêtes SQL directes).
 - `Vue` : Présente les données à l'utilisateur (HTML, CSS) et peut contenir des scripts PHP pour afficher le contenu dynamique.
 - `Contrôleur` : Fait le lien entre le modèle et la vue, traite les entrées de l'utilisateur, modifie les données du modèle et met à jour la vue.
+
+## Rappel POO
+
+La Programmation Orientée Objet (POO) est un paradigme de programmation qui utilise des "objets" pour modéliser des éléments du monde réel. Ce paradigme est fondamental dans de nombreux langages de programmation modernes, y compris PHP, et offre plusieurs avantages pour le développement de systèmes complexes. Voici les principes clés de la POO que tout développeur doit comprendre :
+
+- `Encapsulation` : Ce principe concerne le regroupement des données (attributs) et des méthodes (fonctions) qui manipulent ces données en une seule unité, ou classe, en restreignant l'accès direct aux composants internes de l'objet. Cela est généralement réalisé à l'aide de modificateurs d'accès qui définissent clairement ce qui peut être accédé de l'extérieur de la classe.
+
+- `Abstraction` : L'abstraction permet de se concentrer sur ce qu'un objet fait, plutôt que sur la façon dont il le fait, en exposant uniquement les détails nécessaires. Dans une classe, cela signifie exposer des interfaces publiques tout en cachant les détails de l'implémentation interne (les méthodes et les variables).
+
+- `Héritage` : L'héritage permet à une classe de hériter des propriétés et méthodes d'une autre classe. Dans la POO, nous définissons souvent une classe de base (ou parent) avec des attributs et des méthodes qui seront communs à toutes les classes dérivées (enfants) qui l'étendent pour réutiliser le code.
+
+- `Polymorphisme` : Ce principe permet aux classes d'être utilisées à travers leurs interfaces plutôt qu'explicitement, ce qui signifie que plusieurs classes peuvent être traitées comme étant du même type si elles héritent de la même classe de base ou implémentent la même interface. Cela permet de programmer de manière plus générale et flexible.
+
+### Exemple en PHP
+
+Considérons une classe simple en PHP qui illustre certains de ces principes :
+
+```php
+<?php
+abstract class Vehicle {
+    protected $speed = 0;
+
+    public function setSpeed($speed) {
+        $this->speed = $speed;
+    }
+
+    abstract public function makeSound();
+}
+
+class Car extends Vehicle {
+    public function makeSound() {
+        return "Vroom";
+    }
+}
+
+// Utilisation
+$myCar = new Car();
+$myCar->setSpeed(100);
+echo $myCar->makeSound();  // Affiche 'Vroom'
+`` 
 
 ## Prérequis
 - PHP 7.4 ou supérieur
