@@ -18,7 +18,7 @@ La Programmation Orientée Objet (POO) est un paradigme de programmation qui uti
 
 - `Abstraction` : L'abstraction permet de se concentrer sur ce qu'un objet fait, plutôt que sur la façon dont il le fait, en exposant uniquement les détails nécessaires. Dans une classe, cela signifie exposer des interfaces publiques tout en cachant les détails de l'implémentation interne (les méthodes et les variables).
 
-- `Héritage` : L'héritage permet à une classe de hériter des propriétés et méthodes d'une autre classe. Dans la POO, nous définissons souvent une classe de base (ou parent) avec des attributs et des méthodes qui seront communs à toutes les classes dérivées (enfants) qui l'étendent pour réutiliser le code.
+- `Héritage` : L'héritage permet à une classe d'hériter des propriétés et méthodes d'une autre classe. Dans la POO, nous définissons souvent une classe de base (ou parent) avec des attributs et des méthodes qui seront communs à toutes les classes dérivées (enfants) qui l'étendent pour réutiliser le code.
 
 - `Polymorphisme` : Ce principe permet aux classes d'être utilisées à travers leurs interfaces plutôt qu'explicitement, ce qui signifie que plusieurs classes peuvent être traitées comme étant du même type si elles héritent de la même classe de base ou implémentent la même interface. Cela permet de programmer de manière plus générale et flexible.
 
