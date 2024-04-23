@@ -1,0 +1,35 @@
+# Fichiers de configuration du système
+*.ini
+*.swp
+*.swo
+*.swn
+
+# Dossiers spécifiques au système d'exploitation
+.DS_Store
+Thumbs.db
+
+# Dossiers et fichiers générés par l'éditeur/IDE
+/.idea/
+*.sublime-workspace
+
+# Dossier des dépendances
+/vendor/
+
+# Fichiers spécifiques au serveur
+.htaccess
+
+# Fichiers de cache et de sessions
+cache/*
+!cache/.gitkeep
+sessions/*
+!sessions/.gitkeep
+
+# Fichiers de log
+*.log
+
+# Dossiers spécifiques aux tests
+/phpunit.xml
+/vendor/bin/phpunit
+
+# Environnements de développement local
+/.env
