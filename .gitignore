@@ -33,3 +33,5 @@ sessions/*
 
 # Environnements de développement local
 /.env
+
+.env.local
