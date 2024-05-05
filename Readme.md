@@ -160,57 +160,97 @@ Ce projet est organisé en plusieurs dossiers et fichiers principaux pour facili
 - Chaque composant et dossier est conçu pour séparer clairement les responsabilités au sein de l'application, suivant les principes du modèle MVC. Cette séparation aide à maintenir le code organisé, facile à tester, et simplifie la modification ou l'extension des fonctionnalités à l'avenir.
 
 
-## Exercice - Pas à pas ##
-- ### 1. Créer le fichier `Database.php` pour la connexion à la base de données
+## Exercice - Pas à pas
+
+### 1. Installer la bibliothèque Dotenv
+Avant de configurer la connexion à la base de données, il est essentiel de sécuriser les informations de connexion en les stockant dans des variables d'environnement. Nous utiliserons la bibliothèque `vlucas/phpdotenv` pour charger ces variables depuis un fichier `.env`.
+
+> **Instructions :**
+> - Exécutez la commande suivante pour installer la bibliothèque Dotenv via Composer :
+>   ```bash
+>   composer require vlucas/phpdotenv
+>   ```
+
+### 2. Créer le fichier `.env`
+Créez un fichier `.env` à la racine de votre projet pour stocker les identifiants de votre base de données de manière sécurisée. Assurez-vous que ce fichier n'est pas ajouté à votre système de contrôle de version en l'ajoutant à votre fichier `.gitignore`.
+
+> **Contenu du fichier `.env` :**
+> ```
+> DB_HOST=localhost
+> DB_NAME=ma_base_de_donnees
+> DB_USERNAME=mon_utilisateur
+> DB_PASSWORD=mon_mot_de_passe
+> ```
+
+### 3. Créer le fichier `Database.php` pour la connexion à la base de données
 **Objectif : Établir une connexion à la base de données réutilisable à travers toute l'application.**
 
->**Instructions :**
-Utiliser le pattern Singleton pour s'assurer qu'une seule instance de connexion à la base de données est créée.
-Utiliser PDO pour la connexion afin de profiter de ses avantages en termes de sécurité et de facilité d'utilisation.
-Gèrer les exceptions pour capturer et traiter les erreurs de connexion.
+> **Instructions :**
+> - Utiliser le pattern Singleton pour s'assurer qu'une seule instance de connexion à la base de données est créée.
+> - Utiliser PDO pour la connexion afin de profiter de ses avantages en termes de sécurité et de facilité d'utilisation.
+> - Charger les informations de connexion depuis le fichier `.env` à l'aide de la bibliothèque Dotenv.
+> - Gérer les exceptions pour capturer et traiter les erreurs de connexion.
 
->**Aide**
-#### Comprendre le Singleton Pattern
-
-Le **Singleton Pattern** est un modèle de conception utilisé en programmation orientée objet qui assure qu'une classe n'a qu'une seule instance et fournit un point d'accès global à cette instance. Ce pattern est particulièrement utile pour gérer des ressources partagées, telles que les connexions à une base de données, où plusieurs instances pourraient entraîner des problèmes de performance ou de cohérence.
-
-#### Fonctionnement du Singleton Pattern
-
-Pour implémenter le Singleton Pattern, suivez ces étapes :
-
-1. **Rendre le constructeur privé :** Cela empêche l'instanciation directe de la classe depuis l'extérieur de celle-ci.
-
-2. **Créer une propriété statique privée :** Cette propriété stockera l'unique instance de la classe.
-
-3. **Fournir une méthode statique publique d'accès :** Cette méthode est le point d'accès global à l'instance. Elle vérifie si l'instance existe déjà, la crée si nécessaire et la retourne.
-
-#### Utilisation du Singleton pour une connexion à la base de données
-
-Un exemple pratique d'utilisation du Singleton Pattern est la gestion d'une connexion à une base de données. Voici un exemple d'implémentation en PHP :
-
+> **Exemple de mise en œuvre dans `Database.php` :**
 ```php
-<?php
+ <?php
+use Dotenv\Dotenv;
+use PDO;
+use PDOException;
+use RuntimeException;
+
+use Dotenv\Dotenv; // Importe la classe Dotenv de la bibliothèque vlucas/phpdotenv pour utiliser les variables d'environnement
+use PDO; // Importe la classe PDO pour l'utilisation de la connexion à la base de données
+use PDOException; // Importe la classe d'exception PDOException pour gérer les erreurs de connexion
+use RuntimeException; // Importe la classe RuntimeException pour lancer des exceptions en cas d'erreur
 
 class Database {
-    private static $instance = null;
-    private $conn;
+    private static $instance; // Déclare une propriété statique qui gardera l'instance unique de la classe (Singleton)
 
-    private function __construct() {
-        // Code de connexion à la base de données
+    private $conn; // Déclare une propriété pour stocker l'objet de connexion à la base de données
+
+    private function __construct() { // Constructeur privé pour empêcher l'instanciation directe de la classe
+        $this->loadCredentials(); // Appelle la méthode pour charger les informations de connexion et établir la connexion
     }
 
-    public static function getInstance() {
-        if (!self::$instance) {
-            self::$instance = new Database();
+    public static function getInstance() { // Méthode publique statique pour obtenir l'instance unique de la classe
+        if (!isset(self::$instance)) { // Vérifie si l'instance n'existe pas déjà
+            self::$instance = new Database(); // Crée une nouvelle instance de la classe si elle n'existe pas
         }
-        return self::$instance;
+        return self::$instance; // Retourne l'instance existante ou nouvellement créée
     }
 
-    public function getConnection() {
-        return $this->conn;
+    public function getConnection() { // Méthode publique pour obtenir l'objet de connexion à la base de données
+        return $this->conn; // Retourne la propriété conn qui contient l'objet PDO de connexion à la base de données
+    }
+
+    private function loadCredentials() { // Méthode privée pour charger les informations de connexion à partir des variables d'environnement
+        $dotenv = Dotenv::createImmutable(__DIR__); // Crée un objet Dotenv pour le répertoire courant
+        $dotenv->load(); // Charge les variables d'environnement du fichier .env dans le répertoire courant
+
+        $host = $_ENV['DB_HOST']; // Récupère le nom d'hôte de la base de données depuis les variables d'environnement
+        $dbName = $_ENV['DB_NAME']; // Récupère le nom de la base de données depuis les variables d'environnement
+        $username = $_ENV['DB_USERNAME']; // Récupère le nom d'utilisateur de la base de données depuis les variables d'environnement
+        $password = $_ENV['DB_PASSWORD']; // Récupère le mot de passe de la base de données depuis les variables d'environnement
+
+        $this->establishConnection($host, $dbName, $username, $password); // Appelle la méthode pour établir la connexion à la base de données avec les informations chargées
+    }
+
+    private function establishConnection($host, $dbName, $username, $password) { // Méthode privée pour établir la connexion à la base de données
+        try {
+            $this->conn = new PDO( // Tente de créer un nouvel objet PDO pour la connexion à la base de données
+                "mysql:host=$host;dbname=$dbName", // Chaîne de connexion qui inclut l'hôte et le nom de la base de données
+                $username, // Nom d'utilisateur pour la connexion à la base de données
+                $password  // Mot de passe pour la connexion à la base de données
+            );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Configure l'objet PDO pour qu'il lance des exceptions en cas d'erreur
+        } catch (PDOException $e) { // Attrape les exceptions PDO si une erreur se produit lors de la connexion
+            throw new RuntimeException("Connection error: " . $e->getMessage()); // Lance une RuntimeException avec le message d'erreur de la PDOException
+        }
     }
 }
-```
+
+> ```
 
 - ### 2. Créer le modèle Book.php
 **Objectif : Gérer toutes les opérations liées aux livres dans la base de données.**
