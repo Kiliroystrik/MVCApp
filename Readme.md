@@ -250,7 +250,7 @@ class Database {
     }
 }
 
-> ```
+```
 
 - ### 2. Créer le modèle Book.php
 **Objectif : Gérer toutes les opérations liées aux livres dans la base de données.**
